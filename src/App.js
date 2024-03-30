@@ -72,18 +72,20 @@ function App() {
   }
 
   const toggleTaskCompletion = (id) => {
-    setTaskArray(prevValue => {
-      return prevValue.map((item, index) => {
-        if (index === id) {
-          return { ...item, completed: !item.completed };
-        }
-        return item;
-      })
-    });
-    // the copy made below is necessary, it is the only way for the completed property to be updated and sent to the localStorage DB
-    const updatedTasks = taskArray.map((task, index) => ({ ...task })); // Create a copy
-    updatedTasks[id].completed = !updatedTasks[id].completed; // Update completion status in copy
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    if (filterStatus === "all") {
+      setTaskArray(prevValue => {
+        return prevValue.map((item, index) => {
+          if (index === id) {
+            return { ...item, completed: !item.completed };
+          }
+          return item;
+        })
+      });
+      // the copy made below is necessary, it is the only way for the completed property to be updated and sent to the localStorage DB
+      const updatedTasks = taskArray.map((task, index) => ({ ...task })); // Create a copy
+      updatedTasks[id].completed = !updatedTasks[id].completed; // Update completion status in copy
+      localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    }
   }
 
   const handleClearCompleted = () => {
